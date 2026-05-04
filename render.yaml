@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: qatar-foundation-admin
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: qatar-foundation-db
+          property: connectionString
+
+databases:
+  - name: qatar-foundation-db
+    plan: free
